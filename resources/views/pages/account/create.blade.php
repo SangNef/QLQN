@@ -38,15 +38,17 @@
                 <input type="password" name="password" id="password"
                     class="w-full border border-gray-300 rounded-lg p-2 text-gray-800" required>
             </div>
-            <div class="mb-6">
-                <label for="role" class="block text-gray-600 font-medium mb-1">Chức Vụ</label>
-                <select name="role" id="role"
-                    class="w-full border border-gray-300 rounded-lg p-2 text-gray-800" required>
-                    <option value="superadmin" selected>Super admin</option>
-                    <option value="admin">Admin</option>
-                    <option value="user">User</option>
-                </select>
-            </div>
+            @if (session('user')->role == 'superadmin')
+                <div class="mb-6">
+                    <label for="role" class="block text-gray-600 font-medium mb-1">Chức Vụ</label>
+                    <select name="role" id="role" class="w-full border border-gray-300 rounded-lg p-2 text-gray-800"
+                        required>
+                        <option value="superadmin" selected>Super admin</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
+                </div>
+            @endif
             <div class="mb-6" id="department_input" style="display:none;">
                 <label for="department_name" class="block text-gray-600 font-medium mb-1">Phòng ban</label>
                 <input type="text" id="department_name" name="department_name"
@@ -61,11 +63,11 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             var roleSelect = document.getElementById('role');
             var departmentInput = document.getElementById('department_input');
 
-            roleSelect.addEventListener('change', function () {
+            roleSelect.addEventListener('change', function() {
                 if (this.value === 'user') {
                     departmentInput.style.display = 'block';
                 } else {
@@ -84,17 +86,17 @@
 
             $("#department_name").autocomplete({
                 source: availablePositions,
-                minLength: 0, 
+                minLength: 0,
                 open: function() {
                     $(this).autocomplete('widget').css({
-                        'max-height': '200px', 
-                        'overflow-y': 'auto' ,
+                        'max-height': '200px',
+                        'overflow-y': 'auto',
                         'overflow-x': 'hidden',
                         'margin-top': '1px',
                         'margin-left': '10px',
                     });
                 }
-            }).focus(function () {
+            }).focus(function() {
                 $(this).autocomplete('search', ''); // Tìm kiếm với từ khóa trống để hiển thị danh sách
             });
         });
