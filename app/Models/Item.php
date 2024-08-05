@@ -5,17 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Suggestion extends Model
+class Item extends Model
 {
     use HasFactory;
-    protected $table = 'suggestions';
+    protected $table = 'item';
 
     protected $fillable = [
         'user_id',
         'date',
-        'description',
-        'image',
-        'status',    
+        'name',
+        'type_1',
+        'type_2',
+        'type_3',
+        'type_4',
     ];
 
     public function user()

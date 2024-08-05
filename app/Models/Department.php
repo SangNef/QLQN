@@ -5,21 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Suggestion extends Model
+class Department extends Model
 {
     use HasFactory;
-    protected $table = 'suggestions';
+    protected $table = 'departments';
 
     protected $fillable = [
-        'user_id',
-        'date',
-        'description',
-        'image',
-        'status',    
+        'name',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->hasOne(User::class);
     }
 }

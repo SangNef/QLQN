@@ -5,21 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Suggestion extends Model
+class Hospital extends Model
 {
     use HasFactory;
-    protected $table = 'suggestions';
+
+    protected $table = 'hospitals';
 
     protected $fillable = [
         'user_id',
-        'date',
-        'description',
-        'image',
-        'status',    
+        'name',
+        'year_birth',
+        'gender',
+        'room_type',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }

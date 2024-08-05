@@ -18,7 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('password');
-            $table->enum('position', ['1', '2', '3', '4', '5']);
+            $table->enum('role', ['user', 'admin', 'superadmin'])->default('user');
+            $table->unsignedBigInteger('department_id')->nullable();
+            $table->foreign('department_id')->references('id')->on('departments');
             $table->boolean('is_deleted')->default(false);
             $table->rememberToken();
             $table->timestamps();

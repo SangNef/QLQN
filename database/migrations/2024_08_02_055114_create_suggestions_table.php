@@ -15,10 +15,13 @@ class CreateSuggestionsTable extends Migration
     {
         Schema::create('suggestions', function (Blueprint $table) {
             $table->id();
-            $table->string('location');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->date('date');
             $table->text('description');
+            $table->string('image');
+            $table->enum('status', ['pending', 'approved', 'completed'])->default('pending');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

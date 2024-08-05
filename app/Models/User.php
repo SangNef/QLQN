@@ -17,7 +17,28 @@ class User extends Authenticatable
         'name',
         'username',
         'password',
-        'position',
+        'role',
+        'department_id',
         'is_deleted',
     ];
+
+    protected function suggestions()
+    {
+        return $this->hasMany(Suggestion::class, 'user_id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class, 'user_id');
+    }
+
+    public function hospital()
+    {
+        return $this->hasMany(Hospital::class, 'user_id');
+    }
 }
