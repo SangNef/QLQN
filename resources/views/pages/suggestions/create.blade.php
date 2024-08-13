@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('content')
-    <div class="container mx-auto p-6 bg-white rounded-xl shadow-lg min-h-[80vh]">
+    <div class="container mx-8 p-6 bg-white rounded-xl shadow-lg min-h-[80vh]">
         <div class="w-full flex justify-between items-center mb-6">
             <h1 class="text-3xl font-extrabold text-gray-800">Thêm Đề Nghị, Nhu Cầu</h1>
             <a href="{{ route('suggestions.index') }}"

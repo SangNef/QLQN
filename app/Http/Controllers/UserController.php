@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Role;
+use App\Models\Storage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +14,7 @@ class UserController extends Controller
     //
     public function index(Request $request)
     {
-        if (session('user')->role != 'superadmin') {
+        if (session('user')->role_id === 5) {
             return redirect()->route('suggestions.index');
         }
 
@@ -40,13 +42,16 @@ class UserController extends Controller
         $users = $users->paginate(10)->appends(['search' => $search, 'department_name' => $departmentName]);
 
         $departments = Department::all();
-        return view('pages.account.list', compact('users', 'search', 'departmentName', 'departments'));
+        $roles = Role::all();
+        return view('pages.account.list', compact('users', 'search', 'departmentName', 'departments', 'roles'));
     }
 
     public function create()
     {
+        $roles = Role::get();
         $departments = Department::get();
-        return view('pages.account.create', compact('departments'));
+        $storages = Storage::get();
+        return view('pages.account.create', compact('departments', 'roles', 'storages'));
     }
 
     public function store(Request $request)
@@ -67,12 +72,19 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->username = $request->username;
         $user->password = $request->password;
-        $user->role = $request->role;
-        if ($request->department_name && $request->role == 'user') {
-            $department = Department::find('name', $request->department_name)->first();
+        $user->role_id = $request->role_id;
+        if ($request->department_name) {
+            $department = Department::where('name', $request->department_name)->first();
             $user->department_id = $department->id;
         } else {
             $user->department_id = null;
+        }
+        if ($request->storage_id) {
+            $user->storage_id = $request->storage_id;
+            $department = Department::where('name', 'Ban Hậu cần')->first();
+            $user->department_id = $department->id;
+        } else {
+            $user->storage_id = null;
         }
         $user->save();
 
@@ -98,6 +110,18 @@ class UserController extends Controller
         }
 
         $user = User::where('username', $request->username)->where('password', $request->password)->first();
+
+        // if ($user && !$user->ip_address)
+        // {
+        //     $user->ip_address = $request->ip_address;
+        //     $user->save(); 
+        // } else if ($user && $user->ip_address != $request->ip_address) {
+        //     return redirect()->route('login')->with('error', 'Tài khoản không được phép đăng nhập trên thiết bị này');
+        // }
+
+        if ($user && $user->is_deleted) {
+            return redirect()->route('login')->with('error', 'Tài khoản đã bị khóa, vui lòng liên hệ quản trị viên');
+        }
         if ($user) {
             session(['user' => $user]);
             return redirect()->route('suggestions.index');
@@ -160,7 +184,7 @@ class UserController extends Controller
 
             return redirect()->route('account.index')->with('success', 'Mở khóa tài khoản thành công');
         } else {
-            if ($user->role == 'superadmin') {
+            if ($user->role_id == 1) {
                 return redirect()->route('account.index')->with('error', 'Không thể khóa tài khoản này');
             }
             $user->is_deleted = true;
@@ -168,5 +192,16 @@ class UserController extends Controller
 
             return redirect()->route('account.index')->with('success', 'Khóa tài khoản thành công');
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        if ($request->user_role == 'ban') {
+            return $this->banAccount($id);
+        }
+        $user = User::find($id);
+        $user->role_id = $request->user_role;
+        $user->save();
+        return redirect()->route('account.index')->with('success', 'Cập nhật tài khoản thành công');
     }
 }

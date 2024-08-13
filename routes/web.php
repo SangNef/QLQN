@@ -26,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tai-khoan', [UserController::class, 'index'])->name('account.index');
     Route::get('/them-tai-khoan', [UserController::class, 'create'])->name('account.create');
     Route::post('/them-tai-khoan', [UserController::class, 'store'])->name('account.store');
+    Route::put('/tai-khoan/{id}', [UserController::class, 'update'])->name('account.update');
 
     Route::get('/de-nghi/tao-moi', [SuggestionController::class, 'create'])->name('suggestion.create');
     Route::post('/de-nghi/tao-moi', [SuggestionController::class, 'store'])->name('suggestion.store');
@@ -37,7 +38,14 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/doi-mat-khau', [UserController::class, 'updatePassword'])->name('account.updatePassword');
     Route::put('/khoa-tai-khoan/{id}', [UserController::class, 'banAccount'])->name('account.ban');
 
-    Route::get('/vat-chat', [ItemController::class, 'index'])->name('items.index');
+    Route::get('/vat-chat-doanh-trai-co-dinh', [ItemController::class, 'index'])->name('doanh-trai.co-dinh');
+    Route::get('/vat-chat-doanh-trai-cap-phat', [ItemController::class, 'index'])->name('doanh-trai.cap-phat');
+    Route::get('/vat-chat-quan-nhu-co-dinh', [ItemController::class, 'index'])->name('quan-nhu.co-dinh');
+    Route::get('/vat-chat-quan-nhu-cap-phat', [ItemController::class, 'index'])->name('quan-nhu.cap-phat');
+    Route::get('/vat-chat-xang-xe-co-dinh', [ItemController::class, 'index'])->name('xang-xe.co-dinh');
+    Route::get('/vat-chat-xang-xe-cap-phat', [ItemController::class, 'index'])->name('xang-xe.cap-phat');
+    Route::get('/vat-chat-quan-y-co-dinh', [ItemController::class, 'index'])->name('quan-y.co-dinh');
+    Route::get('/vat-chat-quan-y-cap-phat', [ItemController::class, 'index'])->name('quan-y.cap-phat');
     Route::get('/vat-chat/tao-moi', [ItemController::class, 'create'])->name('item.create');
     Route::post('/vat-chat/tao-moi', [ItemController::class, 'store'])->name('item.store');
     Route::get('/vat-chat/{id}', [ItemController::class, 'edit'])->name('item.edit');

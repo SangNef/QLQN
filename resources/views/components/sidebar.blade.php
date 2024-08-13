@@ -4,41 +4,96 @@
             <a href="/" class="block w-full py-2 hover:bg-sky-800 hover:pl-3 duration-150">Đề nghị, nhu cầu</a>
         </li>
         <li class="w-full text-white font-bold uppercase mb-4">
-            <a href="{{ route('items.index') }}" class="block w-full py-2 hover:bg-sky-800 hover:pl-3 duration-150">Quản lý vật chất</a>
-        </li>
-        {{-- <li class="w-full text-white font-bold uppercase mb-4">
-            <a href="{{ route('hospitals.index') }}" class="block w-full py-2 hover:bg-sky-800 hover:pl-3 duration-150">Quản lý bệnh viện</a>
-        </li> --}}
-        <li class="w-full text-white font-bold uppercase mb-4">
-            <a href="#"
-                class="menu-toggle flex items-center justify-between py-2 hover:bg-sky-800 hover:pl-3 duration-150">
-                Tài khoản
+            <a href="#" class="menu-toggle flex items-center justify-between py-2 hover:bg-sky-800 hover:pl-3 duration-150">
+                Quản lý vật chất
                 <svg class="w-4 h-4 transition-transform duration-300 transform" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </a>
             <ul class="submenu max-h-0 overflow-hidden transition-max-height duration-300 ease-in-out">
-                @if (session('user')->role == 'superadmin')
+                <li class="w-full text-white font-bold uppercase mb-4">
+                    <a href="#" class="menu-toggle flex text-sm pl-3 items-center justify-between py-2 hover:bg-sky-800 hover:pl-5 duration-150">
+                        Doanh trại
+                        <svg class="w-4 h-4 transition-transform duration-300 transform" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </a>
+                    <ul class="submenu max-h-0 overflow-hidden transition-max-height duration-300 ease-in-out">
+                        <li><a href="{{ route('doanh-trai.co-dinh') }}" class="block text-sm py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-7 pl-5 duration-150">Tài sản cố định</a></li>
+                        <li><a href="{{ route('doanh-trai.cap-phat') }}" class="block text-sm py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-7 pl-5 duration-150">Cấp, phát, nhận vật chất</a></li>
+                    </ul>
+                </li>
+                <li class="w-full text-white font-bold uppercase mb-4">
+                    <a href="#" class="menu-toggle flex text-sm pl-3 items-center justify-between py-2 hover:bg-sky-800 hover:pl-5 duration-150">
+                        Quân nhu
+                        <svg class="w-4 h-4 transition-transform duration-300 transform" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </a>
+                    <ul class="submenu max-h-0 overflow-hidden transition-max-height duration-300 ease-in-out">
+                        <li><a href="{{ route('quan-nhu.co-dinh') }}" class="block text-sm py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-7 pl-5 duration-150">Tài sản cố định</a></li>
+                        <li><a href="{{ route('quan-nhu.cap-phat') }}" class="block text-sm py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-7 pl-5 duration-150">Cấp, phát, nhận vật chất</a></li>
+                    </ul>
+                </li>
+                <li class="w-full text-white font-bold uppercase mb-4">
+                    <a href="#" class="menu-toggle flex text-sm pl-3 items-center justify-between py-2 hover:bg-sky-800 hover:pl-5 duration-150">
+                        Xăng xe
+                        <svg class="w-4 h-4 transition-transform duration-300 transform" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </a>
+                    <ul class="submenu max-h-0 overflow-hidden transition-max-height duration-300 ease-in-out">
+                        <li><a href="{{ route('xang-xe.co-dinh') }}" class="block text-sm py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-7 pl-5 duration-150">Tài sản cố định</a></li>
+                        <li><a href="{{ route('xang-xe.cap-phat') }}" class="block text-sm py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-7 pl-5 duration-150">Cấp, phát, nhận vật chất</a></li>
+                    </ul>
+                </li>
+                <li class="w-full text-white font-bold uppercase mb-4">
+                    <a href="#" class="menu-toggle flex text-sm pl-3 items-center justify-between py-2 hover:bg-sky-800 hover:pl-5 duration-150">
+                        Quân y
+                        <svg class="w-4 h-4 transition-transform duration-300 transform" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </a>
+                    <ul class="submenu max-h-0 overflow-hidden transition-max-height duration-300 ease-in-out">
+                        <li><a href="{{ route('quan-y.co-dinh') }}" class="block text-sm py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-7 pl-5 duration-150">Tài sản cố định</a></li>
+                        <li><a href="{{ route('quan-y.cap-phat') }}" class="block text-sm py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-7 pl-5 duration-150">Cấp, phát, nhận vật chất</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <!-- Phần Tài khoản -->
+        <li class="w-full text-white font-bold uppercase mb-4">
+            <a href="#"
+                class="menu-toggle flex items-center justify-between py-2 hover:bg-sky-800 hover:pl-3 duration-150">
+                Quản lý tài khoản
+                <svg class="w-4 h-4 transition-transform duration-300 transform" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </a>
+            <ul class="submenu max-h-0 overflow-hidden transition-max-height duration-300 ease-in-out">
+                @if (session('user')->role_id === 1)
                     <li><a href="{{ route('account.index') }}"
-                            class="block py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-3 duration-150">Danh Sách</a>
+                            class="block py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-5 duration-150">Danh Sách</a>
                     </li>
                 @endif
                 <li><a href="{{ route('account.changePassword') }}"
-                        class="block py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-3 duration-150">Đổi Mật Khẩu</a>
+                        class="block py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-5 duration-150">Đổi Mật Khẩu</a>
                 </li>
-                <li><a href=""
-                        class="block py-2 px-4 text-gray-300 hover:bg-sky-800 hover:pl-3 duration-150">Thông Tin, Quyền
-                        Hạn</a></li>
+                
             </ul>
         </li>
-        <li class="w-full text-white font-bold uppercase mb-4">
-            <a href="#" class="block w-full py-2 hover:bg-sky-800 hover:pl-3 duration-150">Cập nhật</a>
-        </li>
+
+        
         <!-- Logout Menu Item -->
         <li class="mt-auto w-full text-white font-bold uppercase">
-            <a href="{{ route('logout') }}" class="block w-full py-2 hover:bg-sky-800 hover:pl-3 duration-150">Đăng
-                Xuất</a>
+            <a href="{{ route('logout') }}" class="block w-full py-2 hover:bg-sky-800 hover:pl-3 duration-150">Đăng Xuất</a>
         </li>
     </ul>
 </aside>

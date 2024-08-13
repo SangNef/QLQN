@@ -1,14 +1,15 @@
 @extends('layout.main')
 
 @section('content')
-    <div class="container mx-auto p-6 bg-white rounded-xl shadow-lg min-h-[80vh]">
+    <div class="container mx-8 p-6 bg-white rounded-xl shadow-lg min-h-[80vh]">
         <!-- Your existing content here -->
         <div class="w-full flex justify-between items-center mb-6">
             <h1 class="text-3xl font-extrabold text-gray-800">Danh Sách Đề Nghị, Nhu Cầu</h1>
-            @if (session('user')->role == 'user')
+            @if (session('user')->role_id != 1)
                 <a href="{{ route('suggestion.create') }}"
                     class="px-6 py-2 bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out">Thêm
                     Yêu Cầu</a>
+                    {{-- {{session('user')->role_id}} --}}
             @endif
         </div>
 
@@ -97,7 +98,7 @@
                                 {{ $loop->iteration }}
                             </td>
                             <td class="p-3 border-b">{{ date('d/m/Y', strtotime($suggestion->date)) }}</td>
-                            <td class="p-3 border-b">{{ $suggestion->user->department->name }}</td>
+                            <td class="p-3 border-b">{{ $suggestion->user->department?->name }}</td>
                             <td class="p-3 border-b">{{ $suggestion->user->name }}</td>
                             <td class="p-3 border-b">{{ $suggestion->description }}</td>
                             <td class="p-3 border-b">
@@ -131,12 +132,12 @@
                 <ul class="inline-flex -space-x-px">
                     @if ($suggestions->onFirstPage())
                         <li>
-                            <span class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Previous</span>
+                            <span class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Trước</span>
                         </li>
                     @else
                         <li>
                             <a href="{{ $suggestions->previousPageUrl() }}"
-                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Previous</a>
+                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Trước</a>
                         </li>
                     @endif
 
@@ -154,11 +155,11 @@
                     @if ($suggestions->hasMorePages())
                         <li>
                             <a href="{{ $suggestions->nextPageUrl() }}"
-                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Next</a>
+                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Sau</a>
                         </li>
                     @else
                         <li>
-                            <span class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Next</span>
+                            <span class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Sau</span>
                         </li>
                     @endif
                 </ul>

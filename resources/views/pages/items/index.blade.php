@@ -1,15 +1,12 @@
 @extends('layout.main')
 
 @section('content')
-    <div class="container mx-auto p-6 bg-white rounded-xl shadow-lg min-h-[80vh]">
+    <div class="container mx-8 p-6 bg-white rounded-xl shadow-lg min-h-[80vh]">
         <!-- Your existing content here -->
         <div class="w-full flex justify-between items-center mb-6">
-            <h1 class="text-3xl font-extrabold text-gray-800">Danh Sách Vật Chất Hậu Cần</h1>
-            @if (session('user')->role == 'user')
-                <a href="{{ route('item.create') }}"
-                    class="px-6 py-2 bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out">Thêm
-                    mới</a>
-            @endif
+            <h1 class="text-3xl font-extrabold text-gray-800">{{ $title }}</h1>
+            <a href="{{ route('item.create', ['type' => $type, 'status' => $status]) }}"
+                class="px-6 py-2 bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out">Thêm mới</a>
         </div>
 
         @if (session('success'))
@@ -80,7 +77,8 @@
                 <tbody class="text-sm text-gray-600">
                     @foreach ($items as $item)
                         <tr class="hover:bg-gray-50 even:bg-gray-100 duration-150 cursor-pointer"
-                            onclick="window.location='{{ route('item.detail', ['id' => $item->id]) }}'">
+                            {{-- onclick="window.location='{{ route('item.detail', ['id' => $item->id]) }}'" --}}
+                            >
                             <td class="p-3 border-b">
                                 {{ $loop->iteration }}
                             </td>
@@ -107,12 +105,12 @@
                     @if ($items->onFirstPage())
                         <li>
                             <span
-                                class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Previous</span>
+                                class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Trước</span>
                         </li>
                     @else
                         <li>
                             <a href="{{ $items->previousPageUrl() }}"
-                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Previous</a>
+                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Trước</a>
                         </li>
                     @endif
 
@@ -131,12 +129,12 @@
                     @if ($items->hasMorePages())
                         <li>
                             <a href="{{ $items->nextPageUrl() }}"
-                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Next</a>
+                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Sau</a>
                         </li>
                     @else
                         <li>
                             <span
-                                class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Next</span>
+                                class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Sau</span>
                         </li>
                     @endif
                 </ul>

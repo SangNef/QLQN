@@ -17,7 +17,8 @@ class User extends Authenticatable
         'name',
         'username',
         'password',
-        'role',
+        'ip_address',
+        'role_id',
         'department_id',
         'is_deleted',
     ];
@@ -40,5 +41,15 @@ class User extends Authenticatable
     public function hospital()
     {
         return $this->hasMany(Hospital::class, 'user_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function storage()
+    {
+        return $this->belongsTo(Storage::class, 'storage_id');
     }
 }

@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-    <div class="container mx-auto p-6 bg-white rounded-xl shadow-lg min-h-[80vh]">
+    <div class="container mx-8 p-6 bg-white rounded-xl shadow-lg min-h-[80vh]">
         <div class="w-full flex justify-between items-center mb-6">
             <h1 class="text-3xl font-extrabold text-gray-800">Danh Sách Tài Khoản</h1>
             <a href="{{ route('account.create') }}"
@@ -43,7 +43,8 @@
                         <th class="border-b px-4 py-2 text-left">Phòng ban</th>
                         <th class="border-b px-4 py-2 text-left">Tên Đăng Nhập</th>
                         <th class="border-b px-4 py-2 text-left">Mật Khẩu</th>
-                        <th class="border-b px-4 py-2 text-left">Thao Tác</th>
+                        <th class="border-b px-4 py-2 text-left">Địa chỉ ip</th>
+                        <th class="border-b px-4 py-2 text-left">Thông tin quyền hạn</th>
                     </tr>
                 </thead>
                 <tbody class="text-sm text-gray-700">
@@ -54,17 +55,9 @@
                             <td class="border-b px-4 py-2">{{ $user->department?->name }}</td>
                             <td class="border-b px-4 py-2">{{ $user->username }}</td>
                             <td class="border-b px-4 py-2">{{ $user->password }}</td>
+                            <td class="border-b px-4 py-2">{{ $user->ip_address }}</td>
                             <td class="border-b px-4 py-2">
-                                @if (!$user->is_deleted)
-                                    <form action="{{ route('account.ban', $user->id) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit"
-                                            class="px-4 py-1 bg-red-600 border border-red-700 rounded-md shadow-sm text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-150 ease-in-out">
-                                            Khóa
-                                        </button>
-                                    </form>
-                                @else
+                                @if ($user->is_deleted)
                                     <form action="{{ route('account.ban', $user->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('PUT')
@@ -73,6 +66,30 @@
                                             Mở Khóa
                                         </button>
                                     </form>
+                                @else
+                                    @if ($user->role_id == 1)
+                                        <input type="text" disabled class="border border-gray-300 rounded-md p-2"
+                                            value="{{ $roles->firstWhere('id', 1)?->name }}">
+                                    @else
+                                        <form action="{{ route('account.update', $user->id) }}" method="POST"
+                                            class="inline">
+                                            @csrf
+                                            @method('PUT')
+                                            <select name="user_role" class="border border-gray-300 rounded-md p-2"
+                                                onchange="this.form.submit()">
+
+
+                                                @foreach ($roles as $role)
+                                                    <option value="{{ $role->id }}"
+                                                        {{ $user->role_id == $role->id ? 'selected' : '' }}
+                                                        @if ($role->id == 1) disabled @endif>
+                                                        {{ $role->name }}
+                                                    </option>
+                                                @endforeach
+                                                    <option value="ban" class="text-red-500">Khóa tài khoản</option>
+                                            </select>
+                                        </form>
+                                    @endif
                                 @endif
                             </td>
                         </tr>
@@ -88,12 +105,12 @@
                     @if ($users->onFirstPage())
                         <li>
                             <span
-                                class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Previous</span>
+                                class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Trước</span>
                         </li>
                     @else
                         <li>
                             <a href="{{ $users->previousPageUrl() }}"
-                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Previous</a>
+                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3">Trước</a>
                         </li>
                     @endif
 
@@ -112,12 +129,12 @@
                     @if ($users->hasMorePages())
                         <li>
                             <a href="{{ $users->nextPageUrl() }}"
-                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Next</a>
+                                class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Sau</a>
                         </li>
                     @else
                         <li>
                             <span
-                                class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Next</span>
+                                class="bg-white border border-gray-300 text-gray-500 cursor-default hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3">Sau</span>
                         </li>
                     @endif
                 </ul>

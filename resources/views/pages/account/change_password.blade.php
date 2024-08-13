@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-    <div class="container mx-auto p-6 bg-white rounded-xl shadow-lg min-h-[80vh]">
+    <div class="container mx-8 p-6 bg-white rounded-xl shadow-lg min-h-[80vh]">
         <div class="w-full max-w-lg">
             <div class="border-b border-gray-200 mb-4">
                 <h1 class="text-3xl font-extrabold text-gray-800">Đổi Mật Khẩu</h1>
@@ -36,6 +36,7 @@
                     </div>
 
                     <div class="mb-6">
+                        <label for="cpassword" class="block text-gray-700 text-sm font-medium mb-2">Nhập lại mật khẩu mới</label>
                         <input type="password" name="cpassword" id="cpassword"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 transition duration-150 ease-in-out"
                             required>

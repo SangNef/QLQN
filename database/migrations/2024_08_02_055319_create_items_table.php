@@ -19,6 +19,8 @@ class CreateItemsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->date('date');
             $table->string('name');
+            $table->enum('type', ['doanh-trai', 'quan-nhu', 'xang-xe', 'quan-y']);
+            $table->enum('status', ['co-dinh', 'cap-phat']);
             $table->unsignedTinyInteger('type_1');
             $table->unsignedTinyInteger('type_2');
             $table->unsignedTinyInteger('type_3');
