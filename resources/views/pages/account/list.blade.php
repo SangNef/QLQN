@@ -67,29 +67,28 @@
                                         </button>
                                     </form>
                                 @else
-                                    @if ($user->role_id == 1)
-                                        <input type="text" disabled class="border border-gray-300 rounded-md p-2"
-                                            value="{{ $roles->firstWhere('id', 1)?->name }}">
-                                    @else
-                                        <form action="{{ route('account.update', $user->id) }}" method="POST"
-                                            class="inline">
-                                            @csrf
-                                            @method('PUT')
-                                            <select name="user_role" class="border border-gray-300 rounded-md p-2"
-                                                onchange="this.form.submit()">
-
-
-                                                @foreach ($roles as $role)
-                                                    <option value="{{ $role->id }}"
-                                                        {{ $user->role_id == $role->id ? 'selected' : '' }}
-                                                        @if ($role->id == 1) disabled @endif>
-                                                        {{ $role->name }}
-                                                    </option>
-                                                @endforeach
-                                                    <option value="ban" class="text-red-500">Khóa tài khoản</option>
-                                            </select>
-                                        </form>
-                                    @endif
+                                    <form action="{{ route('account.update', $user->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <select name="user_role" class="border border-gray-300 rounded-md p-2" disabled
+                                            onchange="this.form.submit()">
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role->id }}"
+                                                    {{ $user->role_id == $role->id ? 'selected' : '' }}
+                                                    @if ($role->id == 1) disabled @endif>
+                                                    {{ $role->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </form>
+                                @endif
+                                @if (!$user->is_deleted)
+                                    <form action="{{ route('account.ban', $user->id) }}" method="post" class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button
+                                            class="px-4 py-1 bg-red-600 border border-red-700 rounded-md shadow-sm text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-150 ease-in-out">Khóa</button>
+                                    </form>
                                 @endif
                             </td>
                         </tr>

@@ -71,6 +71,7 @@
                         <th class="p-3 border-b text-left">Loại 2</th>
                         <th class="p-3 border-b text-left">Loại 3</th>
                         <th class="p-3 border-b text-left">Loại 4</th>
+                        <th class="p-3 border-b text-left">Ngày thêm</th>
                         <th class="p-3 border-b text-left"></th>
                     </tr>
                 </thead>
@@ -90,7 +91,7 @@
                             <td class="p-3 border-b">{{ $item->type_2 }}</td>
                             <td class="p-3 border-b">{{ $item->type_3 }}</td>
                             <td class="p-3 border-b">{{ $item->type_4 }}</td>
-                            <td class="p-3 border-b">{{ $item->note }}</td>
+                            <td class="p-3 border-b">{{ \Carbon\Carbon::parse($item->date)->format('d/m/Y') }}</td>
 
                         </tr>
                     @endforeach

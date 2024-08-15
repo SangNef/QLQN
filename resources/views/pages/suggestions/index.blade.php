@@ -110,7 +110,11 @@
                                     <span class="text-green-600 bg-green-100 font-bold py-1 px-2 rounded">Đã Xử Lý</span>
                                 @endif
                             </td>
-                            <td class="p-3 border-b">{{ $suggestion->note }}</td>
+                            <td class="p-3 border-b">
+                                @if ($suggestion->status == 'approved')
+                                    {{ $suggestion->note }}
+                                @endif
+                            </td>
                             <td class="p-3 border-b">
                                 <form action="{{ route('suggestion.destroy', ['id' => $suggestion->id]) }}" method="POST"
                                     onsubmit="return confirm('Bạn có chắc chắn muốn xóa yêu cầu này?');">

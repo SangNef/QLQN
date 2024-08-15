@@ -14,12 +14,21 @@ class Suggestion extends Model
         'user_id',
         'date',
         'description',
-        'image',
         'status',    
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(SuggestionImage::class, 'suggestion_id');
+    }
+
+    public function files()
+    {
+        return $this->hasMany(SuggestionFile::class, 'suggestion_id');
     }
 }

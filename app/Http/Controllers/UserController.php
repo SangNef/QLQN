@@ -196,7 +196,7 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        if ($request->user_role == 'ban') {
+        if (($request->user_role == 'ban') || ($request->user_role == 'unban')) {
             return $this->banAccount($id);
         }
         $user = User::find($id);

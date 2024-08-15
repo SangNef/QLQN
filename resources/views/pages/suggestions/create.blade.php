@@ -36,7 +36,7 @@
                 <div>
                     <label for="room" class="block text-gray-600 font-medium mb-1">Khoa, Ban, Bộ Phận</label>
                     <input type="text" name="room" id="room"
-                        class="w-full border border-gray-300 rounded-lg p-2 text-gray-800 bg-gray-100  cursor-not-allowed"
+                        class="w-full border border-gray-300 rounded-lg p-2 text-gray-800 bg-gray-100 cursor-not-allowed"
                         value="{{ session('user')->department?->name }}" disabled>
                 </div>
                 <div>
@@ -46,12 +46,17 @@
                         placeholder="Nhập nội dung đăng ký"></textarea>
                 </div>
                 <div>
-                    <label for="image" class="block text-gray-600 font-medium mb-1">Ảnh Đính Kèm</label>
-                    <div class="flex items-center space-x-4">
-                        <input type="file" name="image" id="image"
-                            class="w-full border border-gray-300 rounded-lg p-2 text-gray-800" accept="image/*">
-                        <img src="" alt="Preview" id="preview" class="w-1/4 h-auto rounded-lg shadow-sm hidden">
-                    </div>
+                    <label for="image" class="block text-gray-600 font-medium mb-1">Ảnh Hiện Trạng</label>
+                    <input type="file" name="image[]" id="image"
+                        class="w-full border border-gray-300 rounded-lg p-2 text-gray-800" accept="image/*" multiple>
+                </div>
+                <div>
+                    <label for="file" class="block text-gray-600 font-medium mb-1">Đơn đề nghị</label>
+                    <input type="file" name="file[]" id="file"
+                        class="w-full border border-gray-300 rounded-lg p-2 text-gray-800" accept=".pdf,.doc,.docx" multiple>
+                </div>
+                <div id="fileList" class="mt-4 flex flex-col gap-2">
+                    <!-- List of selected file names will appear here -->
                 </div>
                 <div class="flex justify-end">
                     <button type="submit"
@@ -63,19 +68,67 @@
     </div>
 
     <script>
-        const image = document.getElementById('image');
-        const preview = document.getElementById('preview');
-        image.addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                const reader = new FileReader();
-                reader.addEventListener('load', function(e) {
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageInput = document.getElementById('image');
+            const fileInput = document.getElementById('file');
+            const fileList = document.getElementById('fileList');
+            let selectedFiles = [];
+            let selectedImageFiles = [];
+
+            function updateFileList() {
+                fileList.innerHTML = '';
+
+                const allFiles = [...selectedImageFiles, ...selectedFiles];
+
+                allFiles.forEach(file => {
+                    const fileName = document.createElement('div');
+                    fileName.className =
+                        'relative flex items-center justify-between p-2 border border-gray-300 rounded-lg shadow-sm';
+
+                    const nameText = document.createElement('span');
+                    nameText.textContent = file.name;
+
+                    const closeButton = document.createElement('button');
+                    closeButton.className = 'text-red-500 font-bold';
+                    closeButton.innerHTML = '&times;';
+                    closeButton.addEventListener('click', function() {
+                        if (selectedImageFiles.includes(file)) {
+                            selectedImageFiles = selectedImageFiles.filter(f => f !== file);
+                        } else {
+                            selectedFiles = selectedFiles.filter(f => f !== file);
+                        }
+
+                        const dataTransfer = new DataTransfer();
+                        [...selectedImageFiles, ...selectedFiles].forEach(f => dataTransfer.items.add(f));
+                        imageInput.files = dataTransfer.files;
+                        fileInput.files = dataTransfer.files;
+
+                        fileName.remove();
+                    });
+
+                    fileName.appendChild(nameText);
+                    fileName.appendChild(closeButton);
+                    fileList.appendChild(fileName);
                 });
-                reader.readAsDataURL(this.files[0]);
-            } else {
-                preview.classList.add('hidden');
             }
+
+            function handleFileInputChange(input, fileArray) {
+                const files = Array.from(input.files);
+                fileArray.push(...files);
+
+                // Ensure files are unique
+                fileArray = [...new Set(fileArray)];
+
+                updateFileList();
+            }
+
+            imageInput.addEventListener('change', function() {
+                handleFileInputChange(imageInput, selectedImageFiles);
+            });
+
+            fileInput.addEventListener('change', function() {
+                handleFileInputChange(fileInput, selectedFiles);
+            });
         });
     </script>
 @endsection

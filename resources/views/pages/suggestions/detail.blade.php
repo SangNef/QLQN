@@ -5,8 +5,9 @@
         <div class="w-full flex justify-between items-center mb-6">
             <h1 class="text-3xl font-extrabold text-gray-800">Chi Tiết Đề Nghị, Nhu Cầu</h1>
             <a href="{{ route('suggestions.index') }}"
-                class="px-6 py-2 bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out shadow-md rounded-lg text-white text-lg">Danh
-                Sách</a>
+                class="px-6 py-2 bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out shadow-md rounded-lg text-white text-lg">
+                Danh Sách
+            </a>
         </div>
 
         @if (session('success'))
@@ -37,10 +38,30 @@
 
         <div class="mb-6 flex">
             <h2 class="text-lg w-64 font-semibold text-gray-800">Ảnh Đính Kèm:</h2>
-            <div class="flex gap-4">
-                <img src="{{ asset('storage/' . $suggestion->image) }}" alt="Suggestion Image"
-                    class="w-64 border border-gray-300 rounded-lg shadow-sm">
-            </div>
+            <ul class="">
+                @foreach ($suggestion->images as $image)
+                    <li class="relative flex items-center justify-between p-2 border border-gray-300 rounded-lg shadow-sm mb-2">
+                        <a href="{{ asset('images/suggestions/' . $image->image) }}" target="_blank"
+                            class="text-blue-600 hover:underline">
+                            {{ $image->image }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        <div class="mb-6 flex">
+            <h2 class="text-lg w-64 font-semibold text-gray-800">Đơn Đề Nghị:</h2>
+            <ul class="relative flex items-center justify-between p-2 border border-gray-300 rounded-lg shadow-sm mb-2">
+                @foreach ($suggestion->files as $file)
+                    <li>
+                        <a href="{{ asset('files/suggestions/' . $file->file) }}" target="_blank"
+                            class="text-blue-600 hover:underline">
+                            {{ $file->file }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
         </div>
 
         <div class="mb-6 flex">
@@ -56,7 +77,7 @@
             </p>
         </div>
 
-        @if ((session('user')->role != 'user') && ($suggestion->status != 'completed'))
+        @if (session('user')->role != 'user' && $suggestion->status != 'completed')
             <form action="{{ route('suggestion.update', ['id' => $suggestion->id]) }}" method="POST">
                 @csrf
                 @method('PUT')

@@ -83,25 +83,25 @@
                 </div>
                 <div>
                     <label for="type_1" class="block text-gray-600 font-medium mb-1">Phân loại 1</label>
-                    <input type="number" name="type_1" id="type_1"
+                    <input type="number" name="type_1" id="type_1" min="0" value="0"
                         class="w-full border border-gray-300 rounded-lg p-2 text-gray-800 bg-gray-100"
                         placeholder="Số lượng">
                 </div>
                 <div>
                     <label for="type_2" class="block text-gray-600 font-medium mb-1">Phân loại 2</label>
-                    <input type="number" name="type_2" id="type_2"
+                    <input type="number" name="type_2" id="type_2" min="0" value="0"
                         class="w-full border border-gray-300 rounded-lg p-2 text-gray-800 bg-gray-100"
                         placeholder="Số lượng">
                 </div>
                 <div>
                     <label for="type_3" class="block text-gray-600 font-medium mb-1">Phân loại 3</label>
-                    <input type="number" name="type_3" id="type_3"
+                    <input type="number" name="type_3" id="type_3" min="0" value="0"
                         class="w-full border border-gray-300 rounded-lg p-2 text-gray-800 bg-gray-100"
                         placeholder="Số lượng">
                 </div>
                 <div>
                     <label for="type_4" class="block text-gray-600 font-medium mb-1">Phân loại 4</label>
-                    <input type="number" name="type_4" id="type_4"
+                    <input type="number" name="type_4" id="type_4" min="0" value="0"
                         class="w-full border border-gray-300 rounded-lg p-2 text-gray-800 bg-gray-100"
                         placeholder="Số lượng">
                 </div>

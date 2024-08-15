@@ -30,6 +30,7 @@ class ItemController extends Controller
         if (array_key_exists($routeName, $config)) {
             $items = Item::where('status', $config[$routeName]['status'])
                 ->where('type', $config[$routeName]['type'])
+                ->orderBy('id', 'desc')
                 ->paginate(10);
 
             $title = $config[$routeName]['title'];

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SuggestionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -54,4 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/vat-chat/{id}', [ItemController::class, 'detail'])->name('item.detail');
 
     Route::get('/benh-vien', [HospitalController::class, 'index'])->name('hospitals.index');
+
+    Route::get('/thong-bao', [NotificationController::class, 'getNotifications'])->name('notifications.index');
+    Route::put('/thong-bao/mark-all-read', [NotificationController::class, 'markAllRead'])->name('notifications.markAllRead');
 });
