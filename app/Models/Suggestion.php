@@ -31,4 +31,9 @@ class Suggestion extends Model
     {
         return $this->hasMany(SuggestionFile::class, 'suggestion_id');
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'suggestion_id');
+    }
 }

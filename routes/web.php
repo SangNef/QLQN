@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SuggestionController;
 use App\Http\Controllers\UserController;
@@ -38,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/doi-mat-khau', [UserController::class, 'changePassword'])->name('account.changePassword');
     Route::put('/doi-mat-khau', [UserController::class, 'updatePassword'])->name('account.updatePassword');
     Route::put('/khoa-tai-khoan/{id}', [UserController::class, 'banAccount'])->name('account.ban');
+    Route::put('/xoa-thiet-bi/{id}', [UserController::class, 'clearDeviceFingerprint'])->name('account.deleteDevice');
 
     Route::get('/vat-chat-doanh-trai-co-dinh', [ItemController::class, 'index'])->name('doanh-trai.co-dinh');
     Route::get('/vat-chat-doanh-trai-cap-phat', [ItemController::class, 'index'])->name('doanh-trai.cap-phat');
@@ -58,4 +60,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/thong-bao', [NotificationController::class, 'getNotifications'])->name('notifications.index');
     Route::put('/thong-bao/mark-all-read', [NotificationController::class, 'markAllRead'])->name('notifications.markAllRead');
+
+    Route::post('/gui-tin-nhan', [MessageController::class, 'sendMessage'])->name('message.send');
+    Route::get('/messages/{receiver_id}', [MessageController::class, 'getMessages'])->name('message.get');
+
 });

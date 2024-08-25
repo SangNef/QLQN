@@ -36,7 +36,7 @@
                             <div class="text-red-500 bg-red-200 p-2 rounded mb-4">{{ session('error') }}</div>
                         @endif
                         <div class="flex flex-col gap-4">
-                            <input type="hidden" name="ip_address" id="ip_address">
+                            <input type="hidden" name="device_fingerprint" id="device_fingerprint" value="">
                             <input type="text" name="username" id="username" placeholder="Tên đăng nhập"
                                 class="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <input type="password" name="password" id="password" placeholder="Mật khẩu"
@@ -76,6 +76,21 @@
             getLocalIP(ip => {
                 document.getElementById('ip_address').value = ip;
             });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
+    <script>
+        // Initialize FingerprintJS
+        const fpPromise = FingerprintJS.load();
+
+        fpPromise.then(fp => fp.get()).then(result => {
+            // The visitor identifier:
+            const visitorId = result.visitorId;
+            console.log(visitorId);
+
+            // Set the visitorId in a hidden input field
+            document.getElementById('device_fingerprint').value = visitorId;
         });
     </script>
 @endsection

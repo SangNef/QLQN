@@ -43,20 +43,20 @@
                         <th class="border-b px-4 py-2 text-left">Phòng ban</th>
                         <th class="border-b px-4 py-2 text-left">Tên Đăng Nhập</th>
                         <th class="border-b px-4 py-2 text-left">Mật Khẩu</th>
-                        <th class="border-b px-4 py-2 text-left">Địa chỉ ip</th>
+                        <th class="border-b px-4 py-2 text-left">Thiết bị</th>
                         <th class="border-b px-4 py-2 text-left">Thông tin quyền hạn</th>
                     </tr>
                 </thead>
                 <tbody class="text-sm text-gray-700">
                     @foreach ($users as $user)
-                        <tr class="hover:bg-gray-50">
-                            <td class="border-b px-4 py-2">{{ $loop->iteration }}</td>
-                            <td class="border-b px-4 py-2">{{ $user->name }}</td>
-                            <td class="border-b px-4 py-2">{{ $user->department?->name }}</td>
-                            <td class="border-b px-4 py-2">{{ $user->username }}</td>
-                            <td class="border-b px-4 py-2">{{ $user->password }}</td>
-                            <td class="border-b px-4 py-2">{{ $user->ip_address }}</td>
-                            <td class="border-b px-4 py-2">
+                        <tr class="hover:bg-gray-50 border-b">
+                            <td class="px-4 py-2">{{ $loop->iteration }}</td>
+                            <td class="px-4 py-2">{{ $user->name }}</td>
+                            <td class="px-4 py-2">{{ $user->department?->name }}</td>
+                            <td class="px-4 py-2">{{ $user->username }}</td>
+                            <td class="px-4 py-2">{{ $user->password }}</td>
+                            <td class="px-4 py-2">{{ $user->device_fingerprint }}</td>
+                            <td class="px-4 py-2 flex gap-2 items-center">
                                 @if ($user->is_deleted)
                                     <form action="{{ route('account.ban', $user->id) }}" method="POST" class="inline">
                                         @csrf
@@ -88,6 +88,15 @@
                                         @method('PUT')
                                         <button
                                             class="px-4 py-1 bg-red-600 border border-red-700 rounded-md shadow-sm text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-150 ease-in-out">Khóa</button>
+                                    </form>
+                                @endif
+                                @if (session('user')->role->type == 1)
+                                    <form action="{{ route('account.deleteDevice', $user->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        {{-- reset device finger button --}}
+                                        <button
+                                            class="px-4 py-1 bg-orange-600 border border-orange-700 rounded-md shadow-sm text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-150 ease-in-out">Xóa thiết bị</button>
                                     </form>
                                 @endif
                             </td>

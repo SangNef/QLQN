@@ -15,7 +15,6 @@
 
 <body>
     @yield('auth')
-
 </body>
 
 </html>

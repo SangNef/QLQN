@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('ip_address')->nullable();
+            $table->string('device_fingerprint')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->unsignedBigInteger('department_id')->nullable();

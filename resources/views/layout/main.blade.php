@@ -21,10 +21,10 @@
 <body>
     {{ View::make('components.header') }}
     {{ View::make('components.sidebar') }}
-    <main class="pl-[300px] pt-16 bg-gray-200 min-h-screen">
+    <main class="pl-[300px] pt-16 bg-gray-200 min-h-screen max-w-full relative overflow-hidden">
         @yield('content')
     </main>
-
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 
 </html>

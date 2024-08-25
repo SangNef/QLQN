@@ -17,7 +17,7 @@ class User extends Authenticatable
         'name',
         'username',
         'password',
-        'ip_address',
+        'device_fingerprint',
         'role_id',
         'department_id',
         'is_deleted',

@@ -1,4 +1,4 @@
-<aside class="w-[300px] min-h-screen fixed bg-sky-900 flex flex-col">
+<aside class="w-[300px] min-h-screen fixed bg-sky-900 flex flex-col z-10">
     <ul class="py-8 mt-16 px-8 flex flex-col flex-grow">
         <li class="w-full text-white font-bold uppercase mb-4">
             <a href="/" class="block w-full py-2 hover:bg-sky-800 hover:pl-3 duration-150">Đề nghị, nhu cầu</a>

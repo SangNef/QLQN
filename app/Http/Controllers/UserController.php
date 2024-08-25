@@ -73,18 +73,32 @@ class UserController extends Controller
         $user->username = $request->username;
         $user->password = $request->password;
         $user->role_id = $request->role_id;
-        if ($request->department_name) {
+        // if ($request->department_name) {
+        //     $department = Department::where('name', $request->department_name)->first();
+        //     $user->department_id = $department->id;
+        // } else {
+        //     $user->department_id = null;
+        // }
+        // if ($request->storage_id) {
+        //     $user->storage_id = $request->storage_id;
+        //     $department = Department::where('name', 'Ban Hậu cần')->first();
+        //     $user->department_id = $department->id;
+        // } else {
+        //     $user->storage_id = null;
+        // }
+        if ($request->role_id == 1 || $request->role_id == 2 || $request->role_id == 3 || $request->role_id == 4) {
+            $user->department_id = null;
+            $user->storage_id = null;
+        }
+        if ($request->role_id == 5) {
             $department = Department::where('name', $request->department_name)->first();
             $user->department_id = $department->id;
-        } else {
-            $user->department_id = null;
+            $user->storage_id = null;
         }
-        if ($request->storage_id) {
-            $user->storage_id = $request->storage_id;
+        if ($request->role_id == 6) {
             $department = Department::where('name', 'Ban Hậu cần')->first();
             $user->department_id = $department->id;
-        } else {
-            $user->storage_id = null;
+            $user->storage_id = $request->storage_id;
         }
         $user->save();
 
@@ -101,6 +115,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required',
             'password' => 'required',
+            'device_fingerprint' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -109,20 +124,26 @@ class UserController extends Controller
                 ->withInput();
         }
 
-        $user = User::where('username', $request->username)->where('password', $request->password)->first();
-
-        // if ($user && !$user->ip_address)
-        // {
-        //     $user->ip_address = $request->ip_address;
-        //     $user->save(); 
-        // } else if ($user && $user->ip_address != $request->ip_address) {
-        //     return redirect()->route('login')->with('error', 'Tài khoản không được phép đăng nhập trên thiết bị này');
-        // }
+        $user = User::where('username', $request->username)
+            ->where('password', $request->password)
+            ->first();
 
         if ($user && $user->is_deleted) {
             return redirect()->route('login')->with('error', 'Tài khoản đã bị khóa, vui lòng liên hệ quản trị viên');
         }
+
         if ($user) {
+            // Kiểm tra fingerprint
+            if ($user->device_fingerprint && $user->device_fingerprint !== $request->device_fingerprint) {
+                return redirect()->route('login')->with('error', 'Bạn không được phép đăng nhập trên thiết bị này');
+            }
+
+            // Lưu fingerprint nếu lần đăng nhập đầu tiên
+            if (!$user->device_fingerprint) {
+                $user->device_fingerprint = $request->device_fingerprint;
+                $user->save();
+            }
+
             session(['user' => $user]);
             return redirect()->route('suggestions.index');
         }
@@ -203,5 +224,13 @@ class UserController extends Controller
         $user->role_id = $request->user_role;
         $user->save();
         return redirect()->route('account.index')->with('success', 'Cập nhật tài khoản thành công');
+    }
+
+    public function clearDeviceFingerprint($id)
+    {
+        $user = User::find($id);
+        $user->device_fingerprint = null;
+        $user->save();
+        return redirect()->route('account.index')->with('success', 'Xóa thiết bị cho tài khoản thành công');
     }
 }

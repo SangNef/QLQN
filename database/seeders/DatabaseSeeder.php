@@ -61,31 +61,37 @@ class DatabaseSeeder extends Seeder
 
         DB::table('roles')->insert([
             [
-                'type' => 'sp-vip',
+                'type' => '1',
                 'name' => 'SuperVip',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'type' => 'tt-bhc',
+                'type' => '2',
                 'name' => 'Thủ trưởng Ban Hậu cần',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'type' => 'tt-bgd',
+                'type' => '2',
                 'name' => 'Thủ trưởng Ban Giám đốc',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'type' => 'hc',
+                'type' => '3',
+                'name' => 'Trợ lý Doanh trại',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'type' => '4',
                 'name' => 'Hành chính',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'type' => 'qlk',
+                'type' => '4',
                 'name' => 'Quản lý kho',
                 'created_at' => now(),
                 'updated_at' => now(),

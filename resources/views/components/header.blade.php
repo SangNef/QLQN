@@ -1,4 +1,4 @@
-<header class="fixed z-10 bg-[#FEF46A] w-full flex justify-between items-center px-10 gap-4 py-2">
+<header class="fixed z-20 bg-[#FEF46A] w-full flex justify-between items-center px-10 gap-4 py-2">
     <div class="flex flex-row items-center gap-4">
         <img src="{{ asset('logo.png') }}" alt="logo" class="w-10 h-10">
         <div class=" text-red-500">HỆ THỐNG QUẢN LÝ HẬU CẦN | BỆNH VIỆN QUÂN Y 354</div>

@@ -79,10 +79,10 @@
             var storageInput = document.getElementById('storage_input');
 
             roleSelect.addEventListener('change', function() {
-                if (this.value == 4) {
+                if (this.value == 5) {
                     departmentInput.style.display = 'block';
                     storageInput.style.display = 'none';
-                } else if (this.value == 5) {
+                } else if (this.value == 6) {
                     departmentInput.style.display = 'none';
                     storageInput.style.display = 'block';
                 } else {
@@ -91,7 +91,6 @@
                 }
             });
 
-            // Trigger change event to set the initial state
             roleSelect.dispatchEvent(new Event('change'));
 
             var availablePositions = [
